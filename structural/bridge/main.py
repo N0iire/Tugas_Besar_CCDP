@@ -1,21 +1,14 @@
-from notification_bridge import NotificationBridge, EmailNotification, SMSNotification
-
-class NotificationService:
-    def __init__(self, notification_impl: NotificationBridge):
-        self._notification_impl = notification_impl
-
-    def send_notification(self, message: str):
-        self._notification_impl.send(message)
+from message import Message
+from sms import SMS, SMSSender
+from email import Email, EmailSender
 
 if __name__ == "__main__":
-    # Menggunakan EmailNotification sebagai implementasi
-    email_notification = EmailNotification()
-    notification_service = NotificationService(email_notification)
-    notification_service.send_notification("Hello, this is an email notification!")
+    # Menggunakan pesan SMS
+    sms_sender = SMSSender()
+    sms_message = SMS(sms_sender)
+    sms_message.send("08123456789", "Hello, this is an SMS message.")
 
-    print("")
-
-    # Menggunakan SMSNotification sebagai implementasi
-    sms_notification = SMSNotification()
-    notification_service = NotificationService(sms_notification)
-    notification_service.send_notification("Hello, this is an SMS notification!")
+    # Menggunakan pesan Email
+    email_sender = EmailSender()
+    email_message = Email(email_sender)
+    email_message.send("recipient@example.com", "Hello, this is an Email message.")
